@@ -1,20 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public string playerName;
+    public string playerName = "";
 
-    private static GameManager _instance;
-
-    public static GameManager Instance => _instance;
+    public static GameManager Instance;
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (Instance != null)
+        {
             Destroy(gameObject);
-        else
-            _instance = this;
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void SaveScore(int score)
+    {
+        SaveManager.SaveScore(playerName, score);
     }
 }

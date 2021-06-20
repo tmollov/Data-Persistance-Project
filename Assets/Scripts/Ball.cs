@@ -6,19 +6,29 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     private Rigidbody m_Rigidbody;
+    public AudioSource onHit;
 
     void Start()
     {
+        onHit = GetComponent<AudioSource>();
         m_Rigidbody = GetComponent<Rigidbody>();
     }
-    
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (SoundManager.Instance.isSoundEnabled)
+        {
+            onHit.Play();
+        }
+    }
+
     private void OnCollisionExit(Collision other)
     {
         var velocity = m_Rigidbody.velocity;
-        
+
         //after a collision we accelerate a bit
         velocity += velocity.normalized * 0.01f;
-        
+
         //check if we are not going totally vertically as this would lead to being stuck, we add a little vertical force
         if (Vector3.Dot(velocity.normalized, Vector3.up) < 0.1f)
         {
