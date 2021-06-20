@@ -7,17 +7,28 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     public Canvas menu;
+    public Canvas scores;
     public Button startBtn;
     public Button exitBtn;
     public Button scoresBtn;
+    public Button backToMenu;
 
     private void Start()
     {
         scoresBtn.onClick.AddListener(ShowScores);
+        backToMenu.onClick.AddListener(ShowMenu);
     }
 
-    public void ShowScores()
+    private void ShowScores()
     {
+        menu.gameObject.SetActive(false);
+        scores.gameObject.SetActive(true);
+    }
+
+    private void ShowMenu()
+    {
+        menu.gameObject.SetActive(true);
+        scores.gameObject.SetActive(false);
     }
 
     public void ExitGame()
